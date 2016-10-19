@@ -219,13 +219,13 @@
 
         function updateIpAddr() {
           // Detech WAN IP Address
-          $.get('http://ifconfig.me/ip', function(data) {
+          $.get('https://api.ipify.org/', function(data) {
             $('#ipAddr').text(data);
-
-            setTimeout(function() {
-              updateIpAddr();
-            }, 10 * 1000);
           });
+
+          setTimeout(function() {
+            updateIpAddr();
+          }, 15 * 1000);
         }
 
         $(function(){
