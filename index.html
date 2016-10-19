@@ -24,16 +24,29 @@
     <!-- Insert this line after script imports -->
     <script>if (window.module) module = window.module;</script>
 
-
     <style>
+        body {
+          overflow: hidden;
+        }
+
+        .tile-area {
+          padding: 70px 0 0 0;
+        }
+
         .tile-area-controls {
             position: fixed;
-            right: 40px;
-            top: 40px;
+            right: 20px;
+            top: 15px;
+        }
+
+        .tile-area .tile-area-title {
+            top: 0;
+            left: 30px;
         }
 
         .tile-group {
             left: 100px;
+            margin-left: 20px;
         }
 
         .tile, .tile-small, .tile-sqaure, .tile-wide, .tile-large, .tile-big, .tile-super {
@@ -288,9 +301,9 @@
       </div>
 
       <div class="tile-area tile-area-scheme-dark fg-white" style="height: 100%; max-height: 100% !important;">
-          <h1 class="tile-area-title">Start</h1>
+          <h1 class="tile-area-title">Trunk Studio Kiosk</h1>
           <div class="tile-area-controls">
-              <button class="image-button icon-right bg-transparent fg-white bg-grayDark bg-hover-dark no-border"><span class="sub-header no-margin text-light">Sergey Pimenov</span> <span class="icon mif-user"></span></button>
+              <button class="image-button icon-right bg-transparent fg-white bg-grayDark bg-hover-dark no-border"><span class="sub-header no-margin text-light">創科資訊</span> <span class="icon mif-user"></span></button>
               <button class="square-button bg-transparent fg-white bg-grayDark bg-hover-dark no-border" onclick="showCharms('#charmSearch')"><span class="mif-search"></span></button>
               <button class="square-button bg-transparent fg-white bg-grayDark bg-hover-dark no-border" onclick="showCharms('#charmSettings')"><span class="mif-cog"></span></button>
               <a href="../tiles.html" class="square-button bg-transparent fg-white bg-grayDark bg-hover-dark no-border"><span class="mif-switch"></span></a>
@@ -300,21 +313,6 @@
               <span class="tile-group-title">General</span>
 
               <div class="tile-container">
-
-                  <a href="http://calendar.google.com" class="tile bg-indigo fg-white" data-role="tile">
-                      <div class="tile-content iconic">
-                          <span class="icon mif-calendar"></span>
-                      </div>
-                      <span class="tile-label">Calendar</span>
-                  </a>
-
-                  <div class="tile bg-darkBlue fg-white" data-role="tile" onclick="document.location.href='http://gmail.com'">
-                      <div class="tile-content iconic">
-                          <span class="icon mif-envelop"></span>
-                      </div>
-                      <span class="tile-label">Inbox</span>
-                  </div>
-
                   <div class="tile-large bg-steel fg-white" data-role="tile" data-on-click="document.location.href='http://forecast.io'">
                       <div class="tile-content" id="weather_bg" style="background: top left no-repeat; background-size: cover">
                           <div class="padding10">
