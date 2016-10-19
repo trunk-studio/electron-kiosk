@@ -6,5 +6,13 @@ const ipcRenderer = require('electron').ipcRenderer;
 
 
 $('#btnShutdown').click(function() {
-  ipcRenderer.send('shutdown');
+  ($('#dlgShutdown').data('dialog')).open();
+});
+
+$('#btnPoweroff').click(function() {
+  ipcRenderer.send('poweroff');
+});
+
+$('#btnReboot').click(function() {
+  ipcRenderer.send('reboot');
 });
