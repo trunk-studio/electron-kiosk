@@ -17,7 +17,7 @@ $('#btnReboot').click(function() {
 });
 
 $("#btnExportReport").on("click", function(){
-  var result = ipcRenderer.sendSync('exportReport');
+  ipcRenderer.sync('exportReport');
   // alert(result);
 })
 
