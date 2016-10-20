@@ -97,7 +97,9 @@ electron.ipcMain.on('exportReport', (event, arg) => {
   exec('temperature', (error, stdout, stderr) => {
     var temperature = parseInt(stdout)
     var project_path = __dirname
+
     var exportReportCmd = 'jasperstarter pr '+project_path+'/reports/demo/trunkDemo.jrxml -P temperature=\''+temperature+'\' project_path=\''+project_path+'\' -f pdf'
+
     var result = exportReportCmd;
 
     if (error) {
@@ -124,7 +126,9 @@ electron.ipcMain.on('exportReport', (event, arg) => {
           return;
         }
 
-        event.returnValue = Math.round(Math.random() * 50);
+
+        event.returnValue = result;
+
       });
 
     });
