@@ -16,5 +16,9 @@ $('#btnReboot').click(function() {
   ipcRenderer.send('reboot');
 });
 
+function updateTemperature() {
+  $('#txtTemperature').text(ipcRenderer.sendSync('update-temperature'));
+  setTimeout(updateTemperature, 3000);
+}
 
-$('#txtTemperature').text(ipcRenderer.sendSync('update-temperature'));
+updateTemperature();
