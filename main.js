@@ -95,19 +95,13 @@ electron.ipcMain.on('exportReport', (event, arg) => {
   console.log("=== exportReport ===");
 
   exec('temperature', (error, stdout, stderr) => {
-    var temperature = parseInt(stdout)
+    var temperature = parseInt(stdout) || "23"
     var project_path = __dirname
 
     var exportReportCmd = 'jasperstarter pr '+project_path+'/reports/demo/trunkDemo.jrxml -P temperature=\''+temperature+'\' project_path=\''+project_path+'\' -f pdf'
 
     var result = exportReportCmd;
 
-    if (error) {
-      console.error(`exec error: ${error}`);
-      result += `&& ${error}`
-      event.returnValue = result;
-      return;
-    }
 
     exec(exportReportCmd, (error, stdout, stderr) => {
 
