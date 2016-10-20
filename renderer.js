@@ -4,7 +4,6 @@
 
 const ipcRenderer = require('electron').ipcRenderer;
 
-
 $('#btnShutdown').click(function() {
   ($('#dlgShutdown').data('dialog')).open();
 });
@@ -16,3 +15,6 @@ $('#btnPoweroff').click(function() {
 $('#btnReboot').click(function() {
   ipcRenderer.send('reboot');
 });
+
+
+$('#txtTemperature').text(ipcRenderer.sendSync('update-temperature'));

@@ -75,3 +75,16 @@ electron.ipcMain.on('reboot', (event, arg) => {
     console.log(`stderr: ${stderr}`);
   });
 });
+
+electron.ipcMain.on('update-temperature', (event, arg) => {
+  exec('temperature', (error, stdout, stderr) => {
+    if (error) {
+      console.error(`exec error: ${error}`);
+      event.returnValue = Math.round(Math.random() * 50);
+      return;
+    }
+    console.log(`stdout: ${stdout}`);
+    console.log(`stderr: ${stderr}`);
+    event.returnValue = parseInt(stdout);
+  });
+});
