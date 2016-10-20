@@ -97,28 +97,35 @@ electron.ipcMain.on('exportReport', (event, arg) => {
   exec('temperature', (error, stdout, stderr) => {
     var temperature = parseInt(stdout)
     var project_path = __dirname
+    var exportReportCmd = 'jasperstarter pr '+project_path+'/reports/demo/trunkDemo.jrxml -P temperature=\''+temperature+'\' project_path=\''+project_path+'\' -f pdf'
+    var result = exportReportCmd;
 
-    console.log('jasperstarter pr ./reports/demo/trunkDemo.jrxml -P temperature=\''+temperature+'\' -P project_path=\''+project_path+'\' -f pdf');
-    exec('jasperstarter pr ./reports/demo/trunkDemo.jrxml -P temperature=\''+temperature+'\' -P project_path=\''+project_path+'\' -f pdf', (error, stdout, stderr) => {
-      console.log("=== jasperstarter stdout ===", stdout);
+    if (error) {
+      console.error(`exec error: ${error}`);
+      result += `&& ${error}`
+      event.returnValue = result;
+      return;
+    }
+
+    exec(exportReportCmd, (error, stdout, stderr) => {
+
       if (error) {
         console.error(`exec error: ${error}`);
-        event.returnValue = Math.round(Math.random() * 50);
+        result += `&& ${error}`
+        event.returnValue = result;
         return;
       }
 
-      exec('lpr ./reports/demo/trunkDemo.jrxml', (error, stdout, stderr) => {
+      exec('lpr '+project_path+'/reports/demo/trunkDemo.pdf', (error, stdout, stderr) => {
         console.log("=== jasperstarter lpr ===", stdout);
         if (error) {
-          console.error(`exec error: ${error}`);
-          event.returnValue = Math.round(Math.random() * 50);
+          result += `&& ${error}`
+          event.returnValue = result;
           return;
         }
 
-        event.returnValue = parseInt(stdout);
+        event.returnValue = Math.round(Math.random() * 50);
       });
-
-      event.returnValue = parseInt(stdout);
 
     });
   });

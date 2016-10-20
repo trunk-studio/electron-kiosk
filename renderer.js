@@ -17,7 +17,8 @@ $('#btnReboot').click(function() {
 });
 
 $("#btnExportReport").on("click", function(){
-  ipcRenderer.send('exportReport');
+  var result = ipcRenderer.sendSync('exportReport');
+  // alert(result);
 })
 
 function updateTemperature() {
