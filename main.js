@@ -6,7 +6,7 @@ const BrowserWindow = electron.BrowserWindow
 
 const exec = require('child_process').exec
 
-const ipcRenderer = electron.ipcRenderer;
+
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -93,32 +93,33 @@ electron.ipcMain.on('update-temperature', (event, arg) => {
 
 electron.ipcMain.on('exportReport', (event, arg) => {
   console.log("=== exportReport ===");
-  var temperature = ipcRenderer.sendSync('update-temperature')
-  // var temperature = "23 C"
 
-  var project_path = __dirname
+  exec('temperature', (error, stdout, stderr) => {
+    var temperature = parseInt(stdout)
+    var project_path = __dirname
 
-  console.log('jasperstarter pr ./reports/demo/trunkDemo.jrxml -P temperature=\''+temperature+'\' -P project_path=\''+project_path+'\' -f pdf');
-  exec('jasperstarter pr ./reports/demo/trunkDemo.jrxml -P temperature=\''+temperature+'\' -P project_path=\''+project_path+'\' -f pdf', (error, stdout, stderr) => {
-    console.log("=== jasperstarter stdout ===", stdout);
-    if (error) {
-      console.error(`exec error: ${error}`);
-      event.returnValue = Math.round(Math.random() * 50);
-      return;
-    }
-
-    exec('lpr ./reports/demo/trunkDemo.jrxml', (error, stdout, stderr) => {
-      console.log("=== jasperstarter lpr ===", stdout);
+    console.log('jasperstarter pr ./reports/demo/trunkDemo.jrxml -P temperature=\''+temperature+'\' -P project_path=\''+project_path+'\' -f pdf');
+    exec('jasperstarter pr ./reports/demo/trunkDemo.jrxml -P temperature=\''+temperature+'\' -P project_path=\''+project_path+'\' -f pdf', (error, stdout, stderr) => {
+      console.log("=== jasperstarter stdout ===", stdout);
       if (error) {
         console.error(`exec error: ${error}`);
         event.returnValue = Math.round(Math.random() * 50);
         return;
       }
 
+      exec('lpr ./reports/demo/trunkDemo.jrxml', (error, stdout, stderr) => {
+        console.log("=== jasperstarter lpr ===", stdout);
+        if (error) {
+          console.error(`exec error: ${error}`);
+          event.returnValue = Math.round(Math.random() * 50);
+          return;
+        }
+
+        event.returnValue = parseInt(stdout);
+      });
+
       event.returnValue = parseInt(stdout);
+
     });
-
-    event.returnValue = parseInt(stdout);
-
   });
 });
